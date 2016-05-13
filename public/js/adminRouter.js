@@ -5,6 +5,7 @@ $(function() {
    		leaveTimeout : 250
 	});
 	
+	//用户路由
 	var adminList = {
 		url : "/adminList",
 		className :  "adminList",
@@ -78,7 +79,7 @@ $(function() {
 		}
 	}
 	
-	//typerouter
+	//商品分类路由
 	var typeList = {
 		url : "/typeList",
 		ajaxData : function() {
@@ -88,7 +89,6 @@ $(function() {
 				type : "get"
 			}).done(function( data ) {
 				that.data = data;
-				console.log(data);
 			});
 		},
 		render : function() {
@@ -155,7 +155,7 @@ $(function() {
 		}
 	}
 	
-	//productRouter
+	//商品路由
 	var proList = {
 		url : "/proList",
 		ajaxData : function() {
@@ -196,13 +196,15 @@ $(function() {
 				
 				if( $.validate.isEmpty(pname) == false ) {
 					return t.find(".alert").alterMes({message:"商品名称不能为空!"});
-				}if( $.validate.isEmpty(price) == false ) {
+				}
+				if( $.validate.isEmpty(price) == false ) {
 					return t.find(".alert").alterMes({message:"商品价格不能为空!"});
-				}if( $.validate.isEmpty(strock) == false ) {
+				}
+				if( $.validate.isEmpty(strock) == false ) {
 					return t.find(".alert").alterMes({message:"商品库存不能为空!"});
 				}
 				
-				var data=new FormData();
+				var data = new FormData();
 				data.append("pname",pname);
 				data.append("price",price);
 				data.append("strock",strock);
@@ -211,10 +213,10 @@ $(function() {
 				
 				$._ajax({
 					url : "/admin/product",
-					data:data,
-					cache:false,
-					processData:false,
-					contentType:false
+					data : data,
+					cache: false,
+		            processData: false,
+		            contentType: false
 				}).done(function( obj ) {
 					if( obj.code ) {
 						location.href = "/admin/index#/proList";
@@ -225,22 +227,22 @@ $(function() {
 			});
 			
 			t.find("#imgpath").change(function(){
-				var file=this.files[0];
-				if(file.type.indexOf("image") == -1){
+				var file = this.files[0];
+				if( file.type.indexOf("image") == -1 ) {
 					$(this).val("");
-					t.find(".alert").alterMes({type:"danger",message:"只能上传图片！"});
+					t.find(".alert").alterMes({type:"danger",message:"只能上传图片"});
 					return false;
 				}
 				
-				if(file.size>(1024*512)){
+				if( file.size > (1024 * 512) ) {
 					$(this).val("");
-					t.find(".alert").alterMes({type:"danger",message:"只能上传小于512K的图片！"});
+					t.find(".alert").alterMes({type:"danger",message:"只能上传小于512K的图片"});
 					return false;
 				}
 				
-				var fr=new FileReader();
+				var fr = new FileReader();
 				fr.readAsDataURL(file);
-				fr.onload=function(){
+				fr.onload = function() {
 					$("#showimg").attr("src",fr.result);
 				}
 			});
@@ -262,69 +264,51 @@ $(function() {
 		}
 	}
 	
-	//newsRouter
+	//新闻路由
 	var newsList = {
 		url : "/newsList",
 		ajaxData : function() {
 			var that = this;
 			return $._ajax({
-				url  : "/admin/producttype",
+				url : "/admin/news",
 				type : "get"
 			}).done(function( data ) {
 				that.data = data;
-				console.log(data);
 			});
 		},
 		render : function() {
-			return ejs.render($("#newsList").html(),{newss:this.data});
+			return ejs.render($("#newsList").html(),{news:this.data});
 		}
 	}
-	
 	var newsAdd = {
 		url : "/newsAdd",
 		render : function() {
-			return ejs.render($("#newsAdd").html(),{newss:this.data});
-		},
-		ajaxData : function() {
-			var that = this;
-			return $._ajax({
-				url  : "/admin/producttype/0",
-				type : "get"
-			}).done(function( data ) {
-				that.data = data;
-			});
+			return $("#newsAdd").html();
 		},
 		bind : function() {
 			var t = $(this);
-			t.find("#sub").click(function(){
+			
+			t.find('#editor').wysiwyg();
+			t.find("#sub").click(function() {
 				var ntitle = t.find("#ntitle").val();
-				var content = t.find("#content").val();
-				var pubdate = t.find("#pubdate").val();
-				var aid = t.find("#aid").val();
+				var ncontent = t.find("#editor").html();
 				
+				//验证
 				if( $.validate.isEmpty(ntitle) == false ) {
 					return t.find(".alert").alterMes({message:"新闻标题不能为空!"});
-				}
-				if( $.validate.isEmpty(content) == false ) {
+				}if( $.validate.isEmpty(ncontent) == false ) {
 					return t.find(".alert").alterMes({message:"新闻内容不能为空!"});
 				}
-				if( $.validate.isEmpty(pubdate) == false ) {
-					return t.find(".alert").alterMes({message:"出版时间不能为空!"});
-				}
-				if( $.validate.isEmpty(author) == false ) {
-					return t.find(".alert").alterMes({message:"作者不能为空!"});
-				}
 				
-				//提交ajax
+				//提交
 				$._ajax({
-					url : "/admin/producttype",
-					data : {"typename":typename,"typeinfo":typeinfo,"pid":pid}
-				}).done(function( obj ){
+					url : "/admin/news",
+					data : {ntitle:ntitle,ncontent:ncontent}
+				}).done(function( obj ) {
 					if( obj.code ) {
-						//如果增加成功，返回列表
-						location.href = "/admin/index#/typeList";
+						location.href = "/admin/index#/newsList";
 					} else {
-						t.find(".alert").alterMes({type:"danger",message:obj.msg})
+						t.find(".alert").alterMes({type:"danger",message:obj.msg});
 					}
 				});
 			});
@@ -334,18 +318,33 @@ $(function() {
 	var newsDel = {
 		url : "/newsDel/:nid",
 		ajaxData : function() {
-			var t = this;
+			var that = this;
 			$._ajax({
-				url : "/admin/news/" + t.params.id,
+				url : "/admin/news/" + that.params.nid,
 				type : "delete"
-			}).done(function() {
+			}).done(function(){
 				location.href = "/admin/index#/newsList";
 			});
-			
-			return false; //停止路由
+			return false;
 		}
 	}
 	
+	//新闻预览
+	var preview = {
+		url : "/preview/:nid",
+		ajaxData : function() {
+			var that = this;
+			return $._ajax({
+				url : "/admin/news/" + that.params.nid,
+				type : "get"
+			}).done(function( data ){
+				that.data = data;
+			});
+		},
+		render : function() {
+			return ejs.render($("#newspreview").html(),{n:this.data[0]});
+		}
+	}
 	
 	var home = {
 		url : "/",
@@ -367,5 +366,6 @@ $(function() {
 		  .push(newsList)
 		  .push(newsAdd)
 		  .push(newsDel)
+		  .push(preview)
 		  .setDefault('/').init();
 });

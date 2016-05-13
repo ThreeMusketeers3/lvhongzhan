@@ -18,9 +18,9 @@ adminRouter.post("/product",upload.single('upfile'),productControl.proAdd);
 adminRouter.delete("/product/:pid",productControl.proDel);
 
 //新闻API
-adminRouter.get("/news",productControl.newsList);
-adminRouter.post("/news",productControl.newsAdd);
-adminRouter.delete("/news/:nid",productControl.newsDel);
-
+adminRouter.get("/news",newsControl.newsList);
+adminRouter.get("/news/:nid",newsControl.preview);
+adminRouter.post("/news",newsControl.newsAdd);
+adminRouter.delete("/news/:nid",newsControl.newsDel);
 
 module.exports = adminRouter;

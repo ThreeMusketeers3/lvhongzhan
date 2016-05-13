@@ -18,19 +18,19 @@ exports.favicon = function( req,res,next ) {
 }
 
 exports.upfile = function( ep,file ) {
-	var start=file.originalname.lastIndexOf(".");
-	var extname=file.originalname.slice(start);
-	var filename=new Date().getTime()+extname;
+	var start = file.originalname.lastIndexOf(".");
+	var extname = file.originalname.slice(start);
+	var filename = new Date().getTime() + extname;
 	
-	var reandPath=rootpath +"/"+ file.path;
-	var writePath=rootpath +"/public/upfile/"+ filename;
+	var reandPath = rootpath + "/" + file.path;
+	var writePath = rootpath + "/public/upfile/" + filename;
 	
-	var rs=fs.createReadStream(reandPath);
-	var ws=fs.createWriteStream(writePath);
+	var rs = fs.createReadStream( reandPath );
+	var ws = fs.createWriteStream( writePath );
 	rs.pipe(ws);
-	ws.on('finish',ep.done('fileup',function  () {
-		fs.unlink(reandPath,function  (err) {
-			if (err) {
+	ws.on('finish',ep.done('fileup',function(){
+		fs.unlink(reandPath,function( err ) {
+			if( err ) {
 				log.debug(err.stack);
 			}
 		});

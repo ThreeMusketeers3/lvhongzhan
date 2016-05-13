@@ -1,3 +1,5 @@
+/// <reference path="typings/main.d.ts"/>
+
 //全局路径 和 系统模块
 global.rootpath = __dirname;
 global.fs = require("fs");
@@ -8,8 +10,8 @@ var session = require('express-session')
 var ejs = require("ejs");
 var log4js = require("log4js");
 log4js.configure("config/log4j.json");
-var multer=require('multer');
-global.upload=multer({dest:'./temps/'});
+var multer  = require('multer');
+global.upload = multer({ dest: 'temps/' });
 
 global.express = require("express");
 global.mysql = require('mysql');

@@ -13,13 +13,14 @@ productControl.prototype.proList = function( req,res,next ) {
 }
 
 productControl.prototype.proAdd = function( req,res,next ) {
-    var ep = new EventProxy();
-    ep.all('fileup','conn',function  (filename,conn) {
-    	var url="/upfile/"+filename;
-    	adminModule.proAdd(ep,conn,[req.body.pname,req.body.price,req.body.strock,url,req.body.type]);
-    });
-    util.upfile(ep,req.file);	//上传文件
-	dataSource.getConn(ep);		//获取连接
+	var ep = new EventProxy();
+	ep.all('fileup','conn',function( filename,conn ) {
+		var url = "/upfile/" + filename;
+		adminModule.proAdd(ep,conn,[req.body.pname,req.body.price,req.body.strock,url,req.body.type]);
+	});
+	util.upfile(ep,req.file); //上传文件
+	dataSource.getConn(ep); //获取连接
+	
 	ep.on("success",function( data ) {
 		if( data.insertId ) {
 			res.json(config.info.suc).end();
