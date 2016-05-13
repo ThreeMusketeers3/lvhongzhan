@@ -13,7 +13,7 @@
 	
 	//option type,title,message,timeout
 	//type warning,danger,info,success
-	$.fn.alterMes = function( option ) {
+	$.fn.alertMes = function( option ) {
 		//判断type输入的合法性
 		var typeobj = {warning:"警告!",danger:"错误!",info:"提示",success:"成功!"};
 		if( !option.type || !typeobj[option.type] ) {

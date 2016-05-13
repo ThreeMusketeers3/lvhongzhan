@@ -36,16 +36,16 @@ $(function() {
 				var password = t.find("#password").val();
 				
 				if( $.validate.isEmpty(aname) == false ) {
-					return t.find(".alert").alterMes({message:"用户名不能为空!"});
+					return t.find(".alert").alertMes({message:"用户名不能为空!"});
 				}
 				if( $.validate.isEmpty(email) == false ) {
-					return t.find(".alert").alterMes({message:"邮箱不能为空!"});
+					return t.find(".alert").alertMes({message:"邮箱不能为空!"});
 				}
 				if( $.validate.isEmpty(password) == false ) {
-					return t.find(".alert").alterMes({message:"密码不能为空!"});
+					return t.find(".alert").alertMes({message:"密码不能为空!"});
 				}
 				if( $.validate.isEmail(email) == false ) {
-					return t.find(".alert").alterMes({message:"邮箱格式不正确!"});
+					return t.find(".alert").alertMes({message:"邮箱格式不正确!"});
 				}
 				
 				//提交ajax
@@ -57,7 +57,7 @@ $(function() {
 						//如果增加成功，返回列表
 						location.href = "/admin/index#/adminList";
 					} else {
-						t.find(".alert").alterMes({type:"danger",message:obj.msg})
+						t.find(".alert").alertMes({type:"danger",message:obj.msg})
 					}
 				});
 			});
@@ -118,10 +118,10 @@ $(function() {
 				var pid = t.find("#pid").val();
 				
 				if( $.validate.isEmpty(typename) == false ) {
-					return t.find(".alert").alterMes({message:"分类名不能为空!"});
+					return t.find(".alert").alertMes({message:"分类名不能为空!"});
 				}
 				if( $.validate.isEmpty(typeinfo) == false ) {
-					return t.find(".alert").alterMes({message:"分类描述不能为空!"});
+					return t.find(".alert").alertMes({message:"分类描述不能为空!"});
 				}
 				
 				//提交ajax
@@ -133,7 +133,7 @@ $(function() {
 						//如果增加成功，返回列表
 						location.href = "/admin/index#/typeList";
 					} else {
-						t.find(".alert").alterMes({type:"danger",message:obj.msg})
+						t.find(".alert").alertMes({type:"danger",message:obj.msg})
 					}
 				});
 			});
@@ -195,13 +195,13 @@ $(function() {
 				var type = t.find("#type").val();
 				
 				if( $.validate.isEmpty(pname) == false ) {
-					return t.find(".alert").alterMes({message:"商品名称不能为空!"});
+					return t.find(".alert").alertMes({message:"商品名称不能为空!"});
 				}
 				if( $.validate.isEmpty(price) == false ) {
-					return t.find(".alert").alterMes({message:"商品价格不能为空!"});
+					return t.find(".alert").alertMes({message:"商品价格不能为空!"});
 				}
 				if( $.validate.isEmpty(strock) == false ) {
-					return t.find(".alert").alterMes({message:"商品库存不能为空!"});
+					return t.find(".alert").alertMes({message:"商品库存不能为空!"});
 				}
 				
 				var data = new FormData();
@@ -221,7 +221,7 @@ $(function() {
 					if( obj.code ) {
 						location.href = "/admin/index#/proList";
 					} else {
-						t.find(".alert").alterMes({type:"danger",message:obj.msg});
+						t.find(".alert").alertMes({type:"danger",message:obj.msg});
 					}
 				});
 			});
@@ -230,13 +230,13 @@ $(function() {
 				var file = this.files[0];
 				if( file.type.indexOf("image") == -1 ) {
 					$(this).val("");
-					t.find(".alert").alterMes({type:"danger",message:"只能上传图片"});
+					t.find(".alert").alertMes({type:"danger",message:"只能上传图片"});
 					return false;
 				}
 				
 				if( file.size > (1024 * 512) ) {
 					$(this).val("");
-					t.find(".alert").alterMes({type:"danger",message:"只能上传小于512K的图片"});
+					t.find(".alert").alertMes({type:"danger",message:"只能上传小于512K的图片"});
 					return false;
 				}
 				
@@ -295,9 +295,9 @@ $(function() {
 				
 				//验证
 				if( $.validate.isEmpty(ntitle) == false ) {
-					return t.find(".alert").alterMes({message:"新闻标题不能为空!"});
+					return t.find(".alert").alertMes({message:"新闻标题不能为空!"});
 				}if( $.validate.isEmpty(ncontent) == false ) {
-					return t.find(".alert").alterMes({message:"新闻内容不能为空!"});
+					return t.find(".alert").alertMes({message:"新闻内容不能为空!"});
 				}
 				
 				//提交
@@ -308,7 +308,7 @@ $(function() {
 					if( obj.code ) {
 						location.href = "/admin/index#/newsList";
 					} else {
-						t.find(".alert").alterMes({type:"danger",message:obj.msg});
+						t.find(".alert").alertMes({type:"danger",message:obj.msg});
 					}
 				});
 			});
