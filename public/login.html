@@ -38,20 +38,20 @@
     			
     			//验证输入正确性   正则表达式
     			if( $.validate.isEmpty(uname) == false) {
-    				$(".form-signin .alert").alterMes({type:"danger",message:"用户名不能为空"});
+    				$(".form-signin .alert").alertMes({type:"danger",message:"用户名不能为空"});
     				$("#username").select();
     				return false;
     			}
     			
     			//邮箱输入是否正确
     			if( $.validate.isEmail(uname) == false ) {
-    				$(".form-signin .alert").alterMes({message:"用户名格式不正确!"});
+    				$(".form-signin .alert").alertMes({message:"用户名格式不正确!"});
     				$("#username").select();
     				return false;
     			}
     			
     			if( $.validate.isEmpty(password) == false ) {
-    				$(".form-signin .alert").alterMes({message:"密码不能为空!"});
+    				$(".form-signin .alert").alertMes({message:"密码不能为空!"});
     				$("#password").select();
     				return false;
     			}
@@ -61,7 +61,7 @@
     				url :"/login/login",data : {username:uname,password:password,rememberme:rememberme}
     			}).done(function( obj ) {
     				 if( obj.code ) {
-//  				 		$(".form-signin .alert").alterMes({message:obj.msg});
+//  				 		$(".form-signin .alert").alertMes({message:obj.msg});
     				 		if( rememberme ) {
     				 			localStorage.setItem("username",uname);
     				 			localStorage.setItem("password",password);
@@ -72,10 +72,10 @@
     				 		
     				 		window.location.href = "/admin/index";
     				 } else {
-    				 		$(".form-signin .alert").alterMes({type:"danger",message:obj.msg});
+    				 		$(".form-signin .alert").alertMes({type:"danger",message:obj.msg});
     				 }
     			}).fail(function() {
-    				 $(".form-signin .alert").alterMes({type:"danger",message:"服务器没有响应，请稍后重试!"});
+    				 $(".form-signin .alert").alertMes({type:"danger",message:"服务器没有响应，请稍后重试!"});
     			});
     		});
     	})

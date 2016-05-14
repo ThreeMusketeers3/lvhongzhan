@@ -19,7 +19,7 @@ create table admin
    issuper              int,
    primary key (aid)
 );
-insert into admin values(default,'超级管理员','admin@yuanku.org','admin',now(),0);
+insert into admin values(default,'超级管理员','lvhongzhan@yeah.net','lvhongzhan',now(),0);
 
 
 /*==============================================================*/
